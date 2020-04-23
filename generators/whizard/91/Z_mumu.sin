@@ -1,0 +1,58 @@
+# Z_mumu.sin
+# <begin>
+# Example of simple generation of dimuon events at Z 
+# <end>
+########################################################################
+#
+# Copyright (C) 1999-2019 by 
+#     Wolfgang Kilian <kilian@physik.uni-siegen.de>
+#     Thorsten Ohl <ohl@physik.uni-wuerzburg.de>
+#     Juergen Reuter <juergen.reuter@desy.de>
+#     with contributions from
+#     cf. main AUTHORS file
+#
+# WHIZARD is free software; you can redistribute it and/or modify it
+# under the terms of the GNU General Public License as published by 
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+#
+# WHIZARD is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+#
+########################################################################
+
+model = SM
+
+# Processes
+process zmumu = e1, E1 => e2, E2
+beams = e1, E1 => isr
+
+compile
+
+# Center of mass energy
+sqrts = 91.2 GeV
+
+# Calculate
+integrate (zmumu)
+
+# Set the number of events. Alternatively we can set the luminosity in femtobarn
+# luminosity = 1
+n_events = 1000
+
+# Define title etc. as global variables, that will be used by PLOT
+$description =
+  "A WHIZARD 2.8 Example.
+   Z -> mumu @ 91.2 events for FCC ee."
+$y_label = "$N_{\textrm{events}}$"
+
+# simulate (zmumu) { $sample = "z_mumu" sample_format = hepmc }
+# simulate (zmumu) { $sample = "z_mumu" sample_format = stdhep }
+$lhef_version = "3.0"
+simulate (zmumu) { $sample = "z_mumu" sample_format = lhef }
+
